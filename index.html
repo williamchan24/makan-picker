@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>Makan Picker</title>
+    <script>
+      try {
+        const t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <span class="brand">Makan<span>Picker</span></span>
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle dark mode"></button>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Makan apa hari ni?</h1>
+      <p class="muted intro">Can't decide where to eat? Set your mood, spin the wheel, and go.</p>
+
+      <div class="layout">
+        <section class="wheel-col">
+          <div class="wheel-wrap">
+            <div class="pointer" aria-hidden="true"></div>
+            <div id="wheel" class="wheel" role="img" aria-label="Food wheel"></div>
+          </div>
+          <button id="spin" class="btn btn-big" type="button">Spin!</button>
+          <p id="wheel-note" class="muted small center" aria-live="polite"></p>
+          <div id="result" class="card result" hidden aria-live="polite"></div>
+        </section>
+
+        <div class="side">
+          <section class="card">
+            <h2>Mood</h2>
+            <p class="label">Budget</p>
+            <div id="budget-chips" class="chips"></div>
+            <p class="label">Cuisine</p>
+            <div id="cuisine-chips" class="chips"></div>
+            <label class="switch">
+              <input id="halal" type="checkbox" />
+              <span>Halal-friendly only</span>
+            </label>
+          </section>
+
+          <section class="card">
+            <h2>Add your own spot</h2>
+            <form id="add-form" class="stack">
+              <div class="row">
+                <label class="grow">Name<input name="name" maxlength="24" placeholder="e.g. Ali's Mamak" required /></label>
+                <label class="emoji-field">Emoji<input name="emoji" maxlength="4" placeholder="🍽️" /></label>
+              </div>
+              <div class="row">
+                <label>Cuisine<input name="cuisine" maxlength="16" list="cuisine-list" placeholder="Mamak" required /></label>
+                <label>Budget
+                  <select name="budget">
+                    <option value="1">Cheap eats</option>
+                    <option value="2" selected>Mid</option>
+                    <option value="3">Treat</option>
+                  </select>
+                </label>
+              </div>
+              <label class="switch"><input name="halal" type="checkbox" /><span>Halal-friendly</span></label>
+              <datalist id="cuisine-list"></datalist>
+              <button class="btn" type="submit">Add to wheel</button>
+            </form>
+            <ul id="custom-list" class="custom-list"></ul>
+          </section>
+
+          <section class="card">
+            <h2>Recent picks</h2>
+            <ol id="history" class="history"></ol>
+            <button id="reset" class="link small" type="button">Reset everything</button>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer class="container footer muted small">
+      Built with vanilla TypeScript + SVG — no frameworks. Your spots are saved in your browser only.
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
